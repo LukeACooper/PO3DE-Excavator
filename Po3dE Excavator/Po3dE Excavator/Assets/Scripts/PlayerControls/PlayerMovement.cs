@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     
     private Animator anim;
     private HashIDs hash;
-    public ExcavatorMovement player;
+    public ExcavatorMovement excavator;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -21,16 +21,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        float v = Input.GetAxis("Vertical");
-        bool sneak = Input.GetButton("Sneak");
-        float turn = Input.GetAxis("Turn");
-        Rotating(turn);
-        MovementManagement(v, sneak);
-    }
-    private void Update()
-    {
-       
+        if(excavator.excavatorActive == false)
+        {
+            float v = Input.GetAxis("Vertical");
+            bool sneak = Input.GetButton("Sneak");
+            float turn = Input.GetAxis("Turn");
+            Rotating(turn);
+            MovementManagement(v, sneak);
+        }
     }
 
     void Rotating(float mouseXInput)
@@ -46,15 +44,19 @@ public class PlayerMovement : MonoBehaviour
     }
     void MovementManagement(float vertical, bool sneaking)
     {
-        anim.SetBool(hash.sneakingBool, sneaking);
-        if(vertical> 0 )
+        if(excavator.excavatorActive == false)
         {
-            anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.fixedDeltaTime);
+            anim.SetBool(hash.sneakingBool, sneaking);
+            if (vertical > 0)
+            {
+                anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.fixedDeltaTime);
+            }
+            else
+            {
+                anim.SetFloat(hash.speedFloat, 0);
+            }
         }
-        else
-        {
-            anim.SetFloat(hash.speedFloat, 0);
-        }
+        
     }
 
     void AudioManagement (bool shout)

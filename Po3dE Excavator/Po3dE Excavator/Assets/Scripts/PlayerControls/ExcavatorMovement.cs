@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ExcavatorMovement : MonoBehaviour
 {
+    public float speedDampTime = 3f;
+    public float sensitivityX = 1.0f;
+    public float animationSpeed = 1f;
+    private Animator anim;
+    private HashIDs hash;
+
     public Transform player;
-    public Camera mainCamera;
     public bool excavatorActive;
     bool isInTransition;
     public Transform seat;
@@ -28,11 +33,14 @@ public class ExcavatorMovement : MonoBehaviour
         {
             isInTransition = true;
         }
+        if(excavatorActive)
+        {
+
+        }
+    
     }
     private void Enter()
     {
-        mainCamera.fieldOfView = 90.0f;
-        
         player.GetComponent<CapsuleCollider>().enabled = false;
         player.GetComponent<Rigidbody>().useGravity = false;
 
@@ -48,15 +56,14 @@ public class ExcavatorMovement : MonoBehaviour
     }
     private void Exit()
     {
-        mainCamera.fieldOfView = 60.0f;
         player.GetComponent<CapsuleCollider>().enabled = true;
         player.GetComponent<Rigidbody>().useGravity = true;
         player.position = Vector3.Lerp(player.position, exitPoint.position, transitionSpeed);
+        player.rotation = Quaternion.Slerp(player.rotation, exitPoint.rotation, transitionSpeed);
         if(player.position == exitPoint.position)
         {
-            isInTransition = false;
             excavatorActive = false;
-            
+            isInTransition = false;  
         }
     }
 }

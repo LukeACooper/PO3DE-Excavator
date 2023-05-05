@@ -4,10 +4,30 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject target;
+    public GameObject player;
+    public ExcavatorMovement excavator;
+    public Camera playerCamera;
+    public Camera excavatorCamera;
 
-    private void LateUpdate()
+    public void Awake()
     {
-        transform.LookAt(target.transform);
+        playerCamera.enabled = true;
+    }
+    public void FixedUpdate()
+    {
+        if(excavator.excavatorActive)
+        {
+            excavatorCamera.enabled = true;
+            playerCamera.enabled = false;
+            //excavatorCamera.GetComponent<AudioListener>().enabled = true;
+            //playerCamera.GetComponent<AudioListener>().enabled = false;
+        }
+        else
+        {
+            playerCamera.enabled = true;
+            excavatorCamera.enabled = false;
+            //playerCamera.GetComponent<AudioListener>().enabled = true;
+            //excavatorCamera.GetComponent<AudioListener>().enabled = false;
+        }
     }
 }
