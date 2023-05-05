@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public AudioClip shoutingClip;
-    public float speedDampTime = 0.01f;
+  
+    public float speedDampTime = 0.1f;
     public float sensitivityX = 1.0f;
     public float animationSpeed = 1.5f;
-
+    
     private Animator anim;
     private HashIDs hash;
-
+    public ExcavatorMovement player;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         float v = Input.GetAxis("Vertical");
         bool sneak = Input.GetButton("Sneak");
         float turn = Input.GetAxis("Turn");
@@ -29,9 +30,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        bool shout = Input.GetButtonDown("Attract");
-        anim.SetBool(hash.shoutingBool, shout);
-        AudioManagement(shout);
+       
     }
 
     void Rotating(float mouseXInput)
@@ -71,11 +70,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().Stop();
             }
-        }
-        
-        if(shout)
-        {
-            AudioSource.PlayClipAtPoint(shoutingClip, transform.position);
         }
 
     }
