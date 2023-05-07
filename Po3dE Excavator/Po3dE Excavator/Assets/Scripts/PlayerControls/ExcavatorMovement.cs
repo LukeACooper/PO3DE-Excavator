@@ -11,7 +11,7 @@ public class ExcavatorMovement : MonoBehaviour
     private HashIDs hash;
 
     public Transform player;
-    public bool excavatorActive;
+    public bool excavatorActive = false;
     bool isInTransition;
     public Transform seat;
     public Vector3 sittingoffset;

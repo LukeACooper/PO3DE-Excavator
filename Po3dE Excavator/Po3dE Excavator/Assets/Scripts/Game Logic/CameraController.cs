@@ -22,10 +22,10 @@ public class CameraController : MonoBehaviour
             //excavatorCamera.GetComponent<AudioListener>().enabled = true;
             //playerCamera.GetComponent<AudioListener>().enabled = false;
         }
-        else
+        else if(!excavator.excavatorActive)
         {
-            playerCamera.enabled = true;
             excavatorCamera.enabled = false;
+            playerCamera.enabled = true;
             //playerCamera.GetComponent<AudioListener>().enabled = true;
             //excavatorCamera.GetComponent<AudioListener>().enabled = false;
         }

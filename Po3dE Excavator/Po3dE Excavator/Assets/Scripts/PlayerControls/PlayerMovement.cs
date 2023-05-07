@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
             Rotating(turn);
             MovementManagement(v, sneak);
         }
+        
     }
 
     void Rotating(float mouseXInput)

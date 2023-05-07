@@ -2701,15 +2701,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7e41c3674cab1b4fab3efcb00c3a3dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 161.5
+      value: 149.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7e41c3674cab1b4fab3efcb00c3a3dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7e41c3674cab1b4fab3efcb00c3a3dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 95.89
+      value: 99.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7e41c3674cab1b4fab3efcb00c3a3dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6131,7 +6131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 59d7609b8242959409751d20856b2442, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Excavator
       objectReference: {fileID: 0}
     - target: {fileID: 1066270285355331924, guid: 59d7609b8242959409751d20856b2442, type: 3}
       propertyPath: m_Materials.Array.data[0]
