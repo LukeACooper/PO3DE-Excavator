@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  
     public float speedDampTime = 0.1f;
     public float sensitivityX = 1.0f;
     public float animationSpeed = 1.5f;
@@ -12,24 +11,25 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private HashIDs hash;
     public ExcavatorMovement excavator;
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
-        anim.SetLayerWeight(1, 1f);
+        if(!gameObject.CompareTag("Excavator"))
+        {
+            anim = GetComponent<Animator>();
+            hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
+            anim.SetLayerWeight(1, 1f);
+        }
+        
     }
 
     private void FixedUpdate()
     {
-        if(excavator.excavatorActive == false)
-        {
-            float v = Input.GetAxis("Vertical");
-            bool sneak = Input.GetButton("Sneak");
-            float turn = Input.GetAxis("Turn");
-            Rotating(turn);
-            MovementManagement(v, sneak);
-        }
-        
+        float v = Input.GetAxis("Vertical");
+        bool sneak = Input.GetButton("Sneak");
+        float turn = Input.GetAxis("Turn");
+        Rotating(turn);
+        MovementManagement(v, sneak);   
     }
 
     void Rotating(float mouseXInput)
@@ -41,11 +41,10 @@ public class PlayerMovement : MonoBehaviour
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseXInput * sensitivityX, 0f);
             ourBody.MoveRotation(ourBody.rotation * deltaRotation); 
         }
-
     }
     void MovementManagement(float vertical, bool sneaking)
     {
-        if(excavator.excavatorActive == false)
+        if(!gameObject.CompareTag("Excavator"))
         {
             anim.SetBool(hash.sneakingBool, sneaking);
             if (vertical > 0)
@@ -58,22 +57,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         
-    }
-
-    void AudioManagement (bool shout)
-    {
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-        {
-            if(!GetComponent<AudioSource>().isPlaying)
-            {
-                GetComponent<AudioSource>().pitch = 0.27f;
-                GetComponent<AudioSource>().Play();
-            }
-            else
-            {
-                GetComponent<AudioSource>().Stop();
-            }
-        }
-
     }
 }

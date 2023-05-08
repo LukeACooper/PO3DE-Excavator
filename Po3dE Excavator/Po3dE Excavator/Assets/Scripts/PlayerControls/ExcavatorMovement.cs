@@ -33,10 +33,7 @@ public class ExcavatorMovement : MonoBehaviour
         {
             isInTransition = true;
         }
-        if(excavatorActive)
-        {
-
-        }
+       
     
     }
     private void Enter()
@@ -56,14 +53,14 @@ public class ExcavatorMovement : MonoBehaviour
     }
     private void Exit()
     {
-        player.GetComponent<CapsuleCollider>().enabled = true;
-        player.GetComponent<Rigidbody>().useGravity = true;
         player.position = Vector3.Lerp(player.position, exitPoint.position, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, exitPoint.rotation, transitionSpeed);
         if(player.position == exitPoint.position)
         {
             excavatorActive = false;
-            isInTransition = false;  
+            isInTransition = false;
+            player.GetComponent<CapsuleCollider>().enabled = true;
+            player.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 }
