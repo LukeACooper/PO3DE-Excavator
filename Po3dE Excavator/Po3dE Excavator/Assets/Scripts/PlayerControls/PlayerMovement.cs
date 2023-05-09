@@ -14,22 +14,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        if(!gameObject.CompareTag("Excavator"))
-        {
-            anim = GetComponent<Animator>();
-            hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
-            anim.SetLayerWeight(1, 1f);
-        }
-        
+        anim = GetComponent<Animator>();
+        hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
+        anim.SetLayerWeight(1, 1f);       
     }
 
     private void FixedUpdate()
     {
-        float v = Input.GetAxis("Vertical");
-        bool sneak = Input.GetButton("Sneak");
-        float turn = Input.GetAxis("Turn");
-        Rotating(turn);
-        MovementManagement(v, sneak);   
+        if(!excavator.excavatorActive)
+        {
+            float v = Input.GetAxis("Vertical");
+            bool sneak = Input.GetButton("Sneak");
+            float turn = Input.GetAxis("Turn");
+            Rotating(turn);
+            MovementManagement(v, sneak);
+        }
+        
     }
 
     void Rotating(float mouseXInput)
@@ -44,17 +44,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void MovementManagement(float vertical, bool sneaking)
     {
-        if(!gameObject.CompareTag("Excavator"))
+
+        anim.SetBool(hash.sneakingBool, sneaking);
+        if (vertical > 0)
         {
-            anim.SetBool(hash.sneakingBool, sneaking);
-            if (vertical > 0)
-            {
-                anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.fixedDeltaTime);
-            }
-            else
-            {
-                anim.SetFloat(hash.speedFloat, 0);
-            }
+            anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.fixedDeltaTime);
+        }
+        else
+        {
+            anim.SetFloat(hash.speedFloat, 0);
         }
         
     }

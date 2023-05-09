@@ -188,22 +188,26 @@ MonoBehaviour:
   sittingoffset: {x: 0, y: 0, z: 0}
   exitPoint: {fileID: 1874597808}
   transitionSpeed: 0.5
---- !u!114 &4831833
-MonoBehaviour:
+--- !u!95 &4831833
+Animator:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4831827}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf2cdf36fe9793d469f9bf7572d19ed7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedDampTime: 0.1
-  sensitivityX: 1
-  animationSpeed: 1.5
-  excavator: {fileID: 0}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e3d75d15d79108f49b72e25d4e97318b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &14771570
 GameObject:
   m_ObjectHideFlags: 0
