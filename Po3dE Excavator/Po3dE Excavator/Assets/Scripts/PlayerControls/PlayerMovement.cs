@@ -4,56 +4,55 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speedDampTime = 0.1f;
-    public float sensitivityX = 1.0f;
+    public float moveSpeed;
+    public float turnSmoothTime = 0.1f;
+    public float turnSmoothVelocity;
     public float animationSpeed = 1.5f;
-    
+    float horizontalInput;
+    float verticalInput;
+    Rigidbody rb;
     private Animator anim;
     private HashIDs hash;
     public ExcavatorMovement excavator;
+    public CharacterController controller;
+    public Transform cam;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
-        anim.SetLayerWeight(1, 1f);       
-    }
-
-    private void FixedUpdate()
-    {
-        if(!excavator.excavatorActive)
-        {
-            float v = Input.GetAxis("Vertical");
-            bool sneak = Input.GetButton("Sneak");
-            float turn = Input.GetAxis("Turn");
-            Rotating(turn);
-            MovementManagement(v, sneak);
-        }
+        anim.SetLayerWeight(1, 1f);
         
     }
-
-    void Rotating(float mouseXInput)
+    private void Start()
     {
-        Rigidbody ourBody = this.GetComponent<Rigidbody>();
-
-        if(mouseXInput != 0)
-        {
-            Quaternion deltaRotation = Quaternion.Euler(0f, mouseXInput * sensitivityX, 0f);
-            ourBody.MoveRotation(ourBody.rotation * deltaRotation); 
-        }
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
     }
-    void MovementManagement(float vertical, bool sneaking)
+   
+    private void Update()
     {
+        MyInput();
+        Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-        anim.SetBool(hash.sneakingBool, sneaking);
-        if (vertical > 0)
+        if(direction.magnitude >= 0.1f)
         {
-            anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.fixedDeltaTime);
-        }
-        else
-        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
             anim.SetFloat(hash.speedFloat, 0);
         }
-        
     }
+    private void FixedUpdate()
+    {
+    }
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+    }
+ 
+
 }

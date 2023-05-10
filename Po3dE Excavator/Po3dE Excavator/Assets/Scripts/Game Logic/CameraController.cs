@@ -9,9 +9,15 @@ public class CameraController : MonoBehaviour
     public Camera playerCamera;
     public Camera excavatorCamera;
 
+
     public void Awake()
     {
         playerCamera.enabled = true;
+    }
+
+    private void Start()
+    {
+     
     }
     public void FixedUpdate()
     {
@@ -29,5 +35,6 @@ public class CameraController : MonoBehaviour
             //playerCamera.GetComponent<AudioListener>().enabled = true;
             //excavatorCamera.GetComponent<AudioListener>().enabled = false;
         }
+      
     }
 }
