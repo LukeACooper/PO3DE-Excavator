@@ -44,11 +44,12 @@ public class ExcavatorMovement : MonoBehaviour
 
         if (excavatorActive)
         {
-            float v = Input.GetAxis("Vertical");
-            float turn = Input.GetAxis("ExcavatorTurn");
+            float verticalInput = Input.GetAxisRaw("Vertical");
+            float turn = Input.GetAxis("Rotate");
             bool spin = Input.GetButton("ExcavatorSpin");
             Rotating(turn);
-            MovementManagement(v, spin);
+            MovementManagement(verticalInput, spin);
+
         }
 
     }
@@ -78,16 +79,14 @@ public class ExcavatorMovement : MonoBehaviour
     }
     private void Enter()
     {
-        player.GetComponent<CapsuleCollider>().enabled = false;
-        player.GetComponent<Rigidbody>().useGravity = false;
-
+        
+        player.GetComponent<CharacterController>().enabled = false;
         player.position = Vector3.Lerp(player.position, seat.position + sittingoffset, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, seat.rotation, transitionSpeed);
-
-        if(player.position == seat.position + sittingoffset)
+        excavatorActive = true;
+        if (player.position == seat.position + sittingoffset)
         {
             isInTransition = false;
-            excavatorActive = true;
             
         }
     }
@@ -95,9 +94,9 @@ public class ExcavatorMovement : MonoBehaviour
     {
         player.position = Vector3.Lerp(player.position, exitPoint.position, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, exitPoint.rotation, transitionSpeed);
-        if(player.position == exitPoint.position)
-        {
-            excavatorActive = false;
+        excavatorActive = false;
+        if (player.position == exitPoint.position)
+        { 
             isInTransition = false;
             player.GetComponent<CapsuleCollider>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;

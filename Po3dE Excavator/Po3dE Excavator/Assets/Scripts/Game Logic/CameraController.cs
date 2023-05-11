@@ -19,21 +19,20 @@ public class CameraController : MonoBehaviour
     {
      
     }
-    public void FixedUpdate()
+    public void Update()
     {
         if(excavator.excavatorActive)
         {
-            excavatorCamera.enabled = true;
+
             playerCamera.enabled = false;
-            //excavatorCamera.GetComponent<AudioListener>().enabled = true;
-            //playerCamera.GetComponent<AudioListener>().enabled = false;
+            excavatorCamera.enabled = true;
+
         }
-        else if(!excavator.excavatorActive)
+        else if(excavator.excavatorActive == false)
         {
             excavatorCamera.enabled = false;
             playerCamera.enabled = true;
-            //playerCamera.GetComponent<AudioListener>().enabled = true;
-            //excavatorCamera.GetComponent<AudioListener>().enabled = false;
+
         }
       
     }
