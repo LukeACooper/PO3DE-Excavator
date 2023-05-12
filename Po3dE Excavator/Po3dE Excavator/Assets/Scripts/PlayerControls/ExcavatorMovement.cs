@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class ExcavatorMovement : MonoBehaviour
 {
-    public float speedDampTime = 3f;
-    public float sensitivityX = 1.0f;
     public float animationSpeed = 1f;
     public Transform player;
+    public Transform excavator;
+    float verticalInput;
+    float horizontalInput;
+    public float moveSpeed;
     public bool excavatorActive = false;
-    bool isInTransition;
+    [SerializeField] bool isInTransition;
     public Transform seat;
-    public Vector3 sittingoffset;
     public Transform exitPoint;
-    [Space]
     public float transitionSpeed = 0.2f;
     private Animator anim;
-    private HashIDs hash;
-
+    public CharacterController excavatorController;
+    public Transform cam;
+    public float turnSmoothTime = 50f;
+    public float turnSmoothVelocity;
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
         anim.SetLayerWeight(1, 1f);
     }
 
@@ -36,72 +37,65 @@ public class ExcavatorMovement : MonoBehaviour
         {
             Exit();
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
+    }
+    private void Update()
+    {
+        if (Input.GetButtonDown("Interact"))
         {
             isInTransition = true;
         }
 
         if (excavatorActive)
         {
-            float v = Input.GetAxis("Vertical");
-            float turn = Input.GetAxis("ExcavatorTurn");
-            bool spin = Input.GetButton("ExcavatorSpin");
-            Rotating(turn);
-            MovementManagement(v, spin);
-        }
+            MyInput();
+            Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+            if (direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
 
-    }
-
-
-    void Rotating(float mouseXInput)
-    {
-        Rigidbody ourBody = this.GetComponent<Rigidbody>();
-
-        if (mouseXInput != 0)
-        {
-            Quaternion deltaRotation = Quaternion.Euler(0f, mouseXInput * sensitivityX, 0f);
-            ourBody.MoveRotation(ourBody.rotation * deltaRotation);
+            }
         }
     }
-    void MovementManagement(float vertical, bool spin)
-    {
-        if (vertical > 0)
-        {
-            anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.fixedDeltaTime);
-        }
-        else
-        {
-            anim.SetFloat(hash.speedFloat, 0);
-        }
 
-    }
     private void Enter()
     {
-        player.GetComponent<CapsuleCollider>().enabled = false;
-        player.GetComponent<Rigidbody>().useGravity = false;
 
-        player.position = Vector3.Lerp(player.position, seat.position + sittingoffset, transitionSpeed);
+        player.position = Vector3.Lerp(player.position, seat.position, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, seat.rotation, transitionSpeed);
 
-        if(player.position == seat.position + sittingoffset)
+        if(player.position.x == seat.position.x)
         {
+            player.transform.parent = seat.transform;
+            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             isInTransition = false;
             excavatorActive = true;
-            
+            player.GetComponent<CapsuleCollider>().enabled = false;
+            player.GetComponent<Rigidbody>().useGravity = false;
         }
     }
     private void Exit()
     {
+        player.transform.parent = null;
         player.position = Vector3.Lerp(player.position, exitPoint.position, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, exitPoint.rotation, transitionSpeed);
         if(player.position == exitPoint.position)
         {
+            player.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePosition;
+            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             excavatorActive = false;
             isInTransition = false;
             player.GetComponent<CapsuleCollider>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;
         }
+    }
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
     }
 
 }

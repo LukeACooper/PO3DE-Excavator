@@ -32,7 +32,15 @@ public class PlayerMovement : MonoBehaviour
    
     private void Update()
     {
-        MyInput();
+        if(!excavator.excavatorActive)
+        {
+
+            MyInput();
+        }
+        else if(excavator.excavatorActive)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+        }
         Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
         if(direction.magnitude >= 0.1f)
@@ -42,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-            anim.SetFloat(hash.speedFloat, 0);
+            
         }
     }
     private void FixedUpdate()
@@ -52,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        anim.SetFloat(hash.speedFloat, 0);
     }
  
 
