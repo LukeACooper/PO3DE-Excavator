@@ -34,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!excavator.excavatorActive)
         {
-
             MyInput();
         }
         else if(excavator.excavatorActive)

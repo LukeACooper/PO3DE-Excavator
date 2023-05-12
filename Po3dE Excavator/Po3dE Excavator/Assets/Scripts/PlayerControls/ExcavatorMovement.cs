@@ -51,7 +51,7 @@ public class ExcavatorMovement : MonoBehaviour
             Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
             if (direction.magnitude >= 0.1f)
             {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float targetAngle = Mathf.Atan2(direction.x/2, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -75,6 +75,7 @@ public class ExcavatorMovement : MonoBehaviour
             excavatorActive = true;
             player.GetComponent<CapsuleCollider>().enabled = false;
             player.GetComponent<Rigidbody>().useGravity = false;
+            player.GetComponent<CharacterController>().enabled = false;
         }
     }
     private void Exit()
@@ -90,6 +91,7 @@ public class ExcavatorMovement : MonoBehaviour
             isInTransition = false;
             player.GetComponent<CapsuleCollider>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;
+            player.GetComponent<CharacterController>().enabled = true;
         }
     }
     private void MyInput()
