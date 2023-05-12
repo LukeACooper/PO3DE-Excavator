@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
-    public float turnSmoothTime = 0.1f;
+    public float turnSmoothTime = -100f;
     public float turnSmoothVelocity;
     public float animationSpeed = 1.5f;
     float horizontalInput;

@@ -18,7 +18,7 @@ public class ExcavatorMovement : MonoBehaviour
     private Animator anim;
     public CharacterController excavatorController;
     public Transform cam;
-    public float turnSmoothTime = 50f;
+    public float turnSmoothTime = -5f;
     public float turnSmoothVelocity;
     private void Awake()
     {
@@ -49,14 +49,14 @@ public class ExcavatorMovement : MonoBehaviour
         {
             MyInput();
             Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
             if (direction.magnitude >= 0.1f)
             {
-                float targetAngle = Mathf.Atan2(direction.x/2, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-
             }
         }
     }
