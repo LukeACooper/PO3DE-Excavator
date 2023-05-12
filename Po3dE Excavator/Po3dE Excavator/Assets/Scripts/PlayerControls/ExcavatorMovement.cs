@@ -5,6 +5,7 @@ using UnityEngine;
 public class ExcavatorMovement : MonoBehaviour
 {
     public float animationSpeed = 1f;
+    public float speedDampTime = 0.01f;
     public Transform player;
     public Transform excavator;
     float verticalInput;
@@ -20,9 +21,12 @@ public class ExcavatorMovement : MonoBehaviour
     public Transform cam;
     public float turnSmoothTime = -5f;
     public float turnSmoothVelocity;
+    private HashIDs hash;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
         anim.SetLayerWeight(1, 1f);
     }
 
@@ -52,11 +56,16 @@ public class ExcavatorMovement : MonoBehaviour
 
             if (direction.magnitude >= 0.1f)
             {
+                anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.deltaTime);
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                anim.SetFloat(hash.speedFloat, 0);
             }
         }
     }

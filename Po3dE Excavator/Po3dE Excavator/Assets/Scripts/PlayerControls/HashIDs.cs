@@ -6,7 +6,6 @@ public class HashIDs : MonoBehaviour
 {
     public int walkState;
     public int speedFloat;
-    public int sneakingBool;
 
     public int leftMoveState;
     public int rightMoveState;
@@ -16,7 +15,6 @@ public class HashIDs : MonoBehaviour
     {
         walkState = Animator.StringToHash("Walk");
         speedFloat = Animator.StringToHash("Speed");
-        sneakingBool = Animator.StringToHash("Sneaking");
 
         leftMoveState = Animator.StringToHash("Left Track");
         rightMoveState = Animator.StringToHash("Right Track");

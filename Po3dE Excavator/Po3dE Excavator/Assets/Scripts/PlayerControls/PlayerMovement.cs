@@ -32,7 +32,8 @@ public class PlayerMovement : MonoBehaviour
    
     private void Update()
     {
-        if(!excavator.excavatorActive)
+        anim.SetFloat(hash.speedFloat, 0);
+        if (!excavator.excavatorActive)
         {
             MyInput();
         }
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        anim.SetFloat(hash.speedFloat, 0);
+        
     }
  
 
