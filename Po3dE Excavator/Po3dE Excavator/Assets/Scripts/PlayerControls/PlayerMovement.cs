@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float turnSmoothTime = -100f;
     public float turnSmoothVelocity;
+    public float speedDampTime = 0.1f;
     public float animationSpeed = 1.5f;
     float horizontalInput;
     float verticalInput;
@@ -32,10 +33,11 @@ public class PlayerMovement : MonoBehaviour
    
     private void Update()
     {
-        anim.SetFloat(hash.speedFloat, 0);
+        
         if (!excavator.excavatorActive)
         {
             MyInput();
+            
         }
         else if(excavator.excavatorActive)
         {
@@ -50,7 +52,11 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-            
+            anim.SetFloat(hash.speedFloat, animationSpeed, speedDampTime, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat(hash.speedFloat, 0);
         }
     }
     private void FixedUpdate()

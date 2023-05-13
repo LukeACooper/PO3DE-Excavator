@@ -6,18 +6,20 @@ public class HashIDs : MonoBehaviour
 {
     public int walkState;
     public int speedFloat;
-
-    public int leftMoveState;
-    public int rightMoveState;
-    public int spinningBool;
+    public int leftMoveFloat;
+    public int rightMoveFloat;
+    public int spinningFloat;
+    public int drivingBool;
+    public int rotatingFloat;
 
     private void Awake()
     {
         walkState = Animator.StringToHash("Walk");
         speedFloat = Animator.StringToHash("Speed");
-
-        leftMoveState = Animator.StringToHash("Left Track");
-        rightMoveState = Animator.StringToHash("Right Track");
-        spinningBool = Animator.StringToHash("Spinning");
+        drivingBool = Animator.StringToHash("Driving");
+        leftMoveFloat = Animator.StringToHash("LeftTrack");
+        rightMoveFloat = Animator.StringToHash("RightTrack");
+        spinningFloat = Animator.StringToHash("Spinning");
+        rotatingFloat = Animator.StringToHash("Rotating");
     }
 }
