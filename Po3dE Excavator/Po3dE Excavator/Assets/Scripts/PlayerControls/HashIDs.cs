@@ -8,7 +8,7 @@ public class HashIDs : MonoBehaviour
     public int speedFloat;
     public int leftMoveFloat;
     public int rightMoveFloat;
-    public int spinningFloat;
+    public int spinningBool;
     public int drivingBool;
     public int rotatingFloat;
 
@@ -19,7 +19,7 @@ public class HashIDs : MonoBehaviour
         drivingBool = Animator.StringToHash("Driving");
         leftMoveFloat = Animator.StringToHash("LeftTrack");
         rightMoveFloat = Animator.StringToHash("RightTrack");
-        spinningFloat = Animator.StringToHash("Spinning");
+        spinningBool = Animator.StringToHash("Spinning");
         rotatingFloat = Animator.StringToHash("Rotating");
     }
 }

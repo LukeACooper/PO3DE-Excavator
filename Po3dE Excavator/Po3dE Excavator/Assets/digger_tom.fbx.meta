@@ -5,13 +5,16 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Left Track
+    second: Idle
   - first:
       74: 5946195416690929842
     second: Right Track
   - first:
       74: -3852894266461739492
     second: Cutting Wheel
+  - first:
+      74: 404446372188743636
+    second: Left Track
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -45,7 +48,7 @@ ModelImporter:
       name: Left Track
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
+      firstFrame: 1
       lastFrame: 240
       wrapMode: 0
       orientationOffsetY: 0
@@ -53,8 +56,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -82,8 +85,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -111,8 +114,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
