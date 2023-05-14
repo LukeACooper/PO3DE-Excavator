@@ -153,14 +153,14 @@ InputManager:
     m_Name: ExcavatorSpin
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: 2
     positiveButton: 1
     altNegativeButton: 
     altPositiveButton: 1
     gravity: 0
     dead: 0.19
     sensitivity: 1
-    snap: 0
+    snap: 1
     invert: 0
     type: 0
     axis: 0
