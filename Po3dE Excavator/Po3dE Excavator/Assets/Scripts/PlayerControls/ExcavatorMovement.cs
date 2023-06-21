@@ -16,20 +16,15 @@ public class ExcavatorMovement : MonoBehaviour
     bool isInTransition;
     public Transform seat;
     public Transform exitPoint;
-   
+    public bool spinning = false;
     public float transitionSpeed = 0.2f;
-    private Animator anim;
     public CharacterController excavatorController;
     public Transform cam;
     public float turnSmoothTime = -5f;
     public float turnSmoothVelocity;
-    private HashIDs hash;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
-        anim.SetLayerWeight(1, 1f);
         
     }
 
@@ -54,17 +49,22 @@ public class ExcavatorMovement : MonoBehaviour
         
         if (excavatorActive)
         {
-            bool spinning = Input.GetButtonDown("ExcavatorSpin");
-            
-            if(spinning)
+           if(Input.GetButton("WheelOn"))
             {
-                anim.SetBool(hash.spinningBool, spinning);
+                spinning = true;
+                if(Input.GetButton("WheelOff"))
+                {
+                    spinning = false;
+                }
+            }
+           while(spinning)
+            {
+
             }
 
             MyInput();
             Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
             Vector3 rotation = new Vector3(0f, rotationInput, 0f);
-
 
             if (rotationInput >= 0.1f)
             {
@@ -77,21 +77,16 @@ public class ExcavatorMovement : MonoBehaviour
 
             if (direction.magnitude >= 0.1f)
             {
-
-                anim.SetFloat(hash.drivingBool, animationSpeed, speedDampTime, Time.deltaTime);
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                transform.rotation = Quaternion.Euler(0f, angle -0.25f, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-                anim.SetFloat(hash.drivingBool, 1);
+                excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);   
                 
             }
             else
             {
-                anim.SetFloat(hash.speedFloat, 0);
-                anim.SetBool(hash.spinningBool, !spinning);
-                anim.SetFloat(hash.drivingBool, 0);
+                
             } 
         }
     }
@@ -136,6 +131,7 @@ public class ExcavatorMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        rotationInput = Input.GetAxisRaw("Rotate");
+        rotationInput = Input.GetAxisRaw("ExRotate");
+
     }
 }

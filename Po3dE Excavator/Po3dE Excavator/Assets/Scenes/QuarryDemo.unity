@@ -174,6 +174,7 @@ MonoBehaviour:
   excavatorActive: 0
   seat: {fileID: 1434879421}
   exitPoint: {fileID: 1874597808}
+  spinning: 0
   transitionSpeed: 1
   excavatorController: {fileID: 4831834}
   cam: {fileID: 270396016}
@@ -972,6 +973,7 @@ MonoBehaviour:
   excavator: {fileID: 4831832}
   playerCamera: {fileID: 99594155}
   excavatorCamera: {fileID: 270396014}
+  inPicture: {fileID: 1758027471}
 --- !u!1001 &105553037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2132,6 +2134,7 @@ MonoBehaviour:
   excavator: {fileID: 4831832}
   playerCamera: {fileID: 99594155}
   excavatorCamera: {fileID: 270396014}
+  inPicture: {fileID: 1758027471}
 --- !u!1 &276927674 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2705092729477217938, guid: 3d1d66175f2e14e4ab9771027cf98890, type: 3}
@@ -11345,6 +11348,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 59d7609b8242959409751d20856b2442, type: 3}
       insertIndex: -1
       addedObject: {fileID: 270396016}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 59d7609b8242959409751d20856b2442, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1758027469}
     - targetCorrespondingSourceObject: {fileID: -154131302099654758, guid: 59d7609b8242959409751d20856b2442, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1131017704}
@@ -15467,6 +15473,108 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751203299}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1758027468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1758027469}
+  - component: {fileID: 1758027471}
+  - component: {fileID: 1758027470}
+  - component: {fileID: 1758027472}
+  m_Layer: 0
+  m_Name: InPictureCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1758027469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758027468}
+  m_LocalRotation: {x: 0.18301268, y: -0.6830128, z: 0.18301262, w: 0.68301266}
+  m_LocalPosition: {x: 9.04, y: 9.66, z: 7.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4831831}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 30, y: -90, z: 0}
+--- !u!81 &1758027470
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758027468}
+  m_Enabled: 1
+--- !u!20 &1758027471
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758027468}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0.75
+    y: 0.75
+    width: 0.5
+    height: 0.5
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 46.31704
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &1758027472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758027468}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec70d2b49c96e44c987424ff14f3593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 118204165}
+  excavator: {fileID: 4831832}
+  playerCamera: {fileID: 99594155}
+  excavatorCamera: {fileID: 270396014}
+  inPicture: {fileID: 1758027471}
 --- !u!4 &1763461680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1032262773906023854, guid: 9e4bef91ad5401e4ab06282862582e85, type: 3}

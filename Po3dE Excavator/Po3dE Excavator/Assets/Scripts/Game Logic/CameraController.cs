@@ -8,12 +8,13 @@ public class CameraController : MonoBehaviour
     public ExcavatorMovement excavator;
     public Camera playerCamera;
     public Camera excavatorCamera;
-
+    public Camera inPicture;
 
     public void Awake()
     {
         playerCamera.enabled = true;
         excavatorCamera.enabled = false;
+        inPicture.enabled = false;
     }
 
     
@@ -23,6 +24,7 @@ public class CameraController : MonoBehaviour
         {
             excavatorCamera.enabled = true;
             playerCamera.enabled = false;
+            inPicture.enabled = true;
 
         }
 
@@ -30,6 +32,7 @@ public class CameraController : MonoBehaviour
         {
             excavatorCamera.enabled = false;
             playerCamera.enabled = true;
+            inPicture.enabled = false;
         }
       
     }
