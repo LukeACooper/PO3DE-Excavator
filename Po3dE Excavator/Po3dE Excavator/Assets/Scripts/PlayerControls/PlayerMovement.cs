@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float turnSmoothTime = -100f;
     public float turnSmoothVelocity;
     public float speedDampTime = 0.1f;
-    public float animationSpeed = 1.5f;
+    public float animationSpeed = 1.75f;
     float horizontalInput;
     float verticalInput;
     Rigidbody rb;
@@ -36,8 +36,9 @@ public class PlayerMovement : MonoBehaviour
         
         if (!excavator.excavatorActive)
         {
-            MyInput();
-            
+
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
         }
         else if(excavator.excavatorActive)
         {
@@ -45,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-        if(direction.magnitude >= 0.1f)
+        if((direction.magnitude >= 0.1f)|| direction.magnitude <= -0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -62,12 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
     }
-    private void MyInput()
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-       
-    }
+    
  
 
 }
