@@ -13,7 +13,6 @@ public class ExcavatorMovement : MonoBehaviour
     bool isInTransition;
     public Transform seat;
     public Transform exitPoint;
-    public bool spinning = false;
     public float transitionSpeed = 0.2f;
     public CharacterController excavatorController;
     public Transform cam;
@@ -24,7 +23,8 @@ public class ExcavatorMovement : MonoBehaviour
 
     private void Awake()
     {
-        
+        anim = GetComponent<Animator>();
+        hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
     }
 
     private void FixedUpdate()
@@ -51,16 +51,12 @@ public class ExcavatorMovement : MonoBehaviour
            if(Input.GetButton("WheelOn"))
             {
                 Debug.Log("spin");
-                spinning = true;
-                if(Input.GetButton("WheelOff"))
-                {
-                    spinning = false;
-                    Debug.Log("no more spin");
-                }
+                anim.SetBool(hash.spinningBool, true);
             }
-           while(spinning)
+            if (Input.GetButton("WheelOff"))
             {
-
+                Debug.Log("no more spin");
+                anim.SetBool(hash.spinningBool, false);
             }
 
 

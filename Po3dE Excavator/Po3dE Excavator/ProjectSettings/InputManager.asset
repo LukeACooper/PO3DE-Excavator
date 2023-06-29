@@ -137,9 +137,9 @@ InputManager:
     m_Name: WheelOn
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 2
+    negativeButton: 7
     positiveButton: 1
-    altNegativeButton: 2
+    altNegativeButton: 7
     altPositiveButton: 1
     gravity: 0
     dead: 0.19
@@ -169,10 +169,10 @@ InputManager:
     m_Name: WheelOff
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 1
+    negativeButton: 8
     positiveButton: 2
-    altNegativeButton: 
-    altPositiveButton: 
+    altNegativeButton: 8
+    altPositiveButton: 2
     gravity: 0
     dead: 0.19
     sensitivity: 1
