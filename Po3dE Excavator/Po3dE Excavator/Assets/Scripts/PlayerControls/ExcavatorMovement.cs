@@ -8,6 +8,7 @@ public class ExcavatorMovement : MonoBehaviour
     public float speedDampTime = 0.01f;
     public Transform player;
     public Transform excavator;
+    public Transform rotator;
     public float moveSpeed;
     public bool excavatorActive = false;
     bool isInTransition;
@@ -29,7 +30,11 @@ public class ExcavatorMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        if(!excavatorActive)
+        {
+            anim.SetBool(hash.drivingLeftBool, false);
+            anim.SetBool(hash.drivingRightBool, false);
+        }
         if (!excavatorActive && isInTransition)
         {
             Enter();
@@ -58,38 +63,32 @@ public class ExcavatorMovement : MonoBehaviour
                 Debug.Log("no more spin");
                 anim.SetBool(hash.spinningBool, false);
             }
-
-
             float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
-            float rotationInput = Input.GetAxisRaw("ExRotate");
-
+            float verticalInput = Input.GetAxisRaw("Vertical");       
             Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-            Vector3 rotation = new Vector3(0f, rotationInput, 0f);
 
-            if ((rotationInput >= 0.1f) || (rotationInput <= -0.1f))
-            {
-                
-            }
-
-            if (direction.magnitude >= 0.1f)
+            if (direction.magnitude >= 0.2f)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);   
+                anim.SetBool(hash.drivingLeftBool, true);
+                anim.SetBool(hash.drivingRightBool, true);
                 
             }
             else
             {
-                
+                anim.SetBool(hash.drivingLeftBool, false);
+                anim.SetBool(hash.drivingRightBool, false);
             } 
         }
     }
 
     private void Enter()
     {
+        //Makes the player a child of the excavator whilst it is activated and places it in the seat position, disabling all physics on the player until 'Exit' is performed.
 
         player.position = Vector3.Lerp(player.position, seat.position, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, seat.rotation, transitionSpeed);
@@ -108,6 +107,7 @@ public class ExcavatorMovement : MonoBehaviour
     }
     private void Exit()
     {
+        //Restores physics of the player and places them at the bottom of the ladder, also un-parenting it and disabling the excavator.
         player.transform.parent = null;
         player.position = Vector3.Lerp(player.position, exitPoint.position, transitionSpeed);
         player.rotation = Quaternion.Slerp(player.rotation, exitPoint.rotation, transitionSpeed);
