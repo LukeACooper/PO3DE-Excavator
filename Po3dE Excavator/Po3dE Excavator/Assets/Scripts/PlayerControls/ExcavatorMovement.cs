@@ -26,15 +26,11 @@ public class ExcavatorMovement : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         hash = GameObject.FindGameObjectWithTag("GameController").GetComponent<HashIDs>();
+        
     }
 
     private void FixedUpdate()
     {
-        if(!excavatorActive)
-        {
-            anim.SetBool(hash.drivingLeftBool, false);
-            anim.SetBool(hash.drivingRightBool, false);
-        }
         if (!excavatorActive && isInTransition)
         {
             Enter();
@@ -73,15 +69,14 @@ public class ExcavatorMovement : MonoBehaviour
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);   
-                anim.SetBool(hash.drivingLeftBool, true);
-                anim.SetBool(hash.drivingRightBool, true);
-                
+                excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+                anim.SetFloat(hash.leftMoveFloat, animationSpeed, speedDampTime, Time.deltaTime);
+                anim.SetFloat(hash.rightMoveFloat, animationSpeed, speedDampTime, Time.deltaTime);
             }
             else
             {
-                anim.SetBool(hash.drivingLeftBool, false);
-                anim.SetBool(hash.drivingRightBool, false);
+                anim.SetFloat(hash.leftMoveFloat, 0f);
+                anim.SetFloat(hash.rightMoveFloat, 0f);
             } 
         }
     }

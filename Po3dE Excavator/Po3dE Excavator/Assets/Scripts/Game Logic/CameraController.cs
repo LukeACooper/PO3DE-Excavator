@@ -17,7 +17,6 @@ public class CameraController : MonoBehaviour
         inPicture.enabled = false;
     }
 
-    
     public void Update()
     {
         if(excavator.excavatorActive == true)
@@ -25,7 +24,6 @@ public class CameraController : MonoBehaviour
             excavatorCamera.enabled = true;
             playerCamera.enabled = false;
             inPicture.enabled = true;
-
         }
 
         else if(excavator.excavatorActive == false)
