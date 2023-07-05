@@ -21,6 +21,7 @@ public class ExcavatorMovement : MonoBehaviour
     public float turnSmoothVelocity;
     private Animator anim;
     private HashIDs hash;
+    public Transform rotator;
 
     private void Awake()
     {
@@ -59,9 +60,31 @@ public class ExcavatorMovement : MonoBehaviour
                 Debug.Log("no more spin");
                 anim.SetBool(hash.spinningBool, false);
             }
+<<<<<<< Updated upstream
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");       
             Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+=======
+            if(Input.GetButtonDown("RotateRight"))
+            {
+                Debug.Log("right turn");
+                rotator.transform.Rotate(0, 0.5f, 0f * Time.deltaTime);
+            }
+            if (Input.GetButtonDown("RotateLeft"))
+            {
+                Debug.Log("left turn");
+                rotator.transform.Rotate(0, -0.5f, 0f * Time.deltaTime);
+            }
+
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
+            //float rotationInput = Input.GetAxisRaw("Rotate");
+
+            Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+           // Vector3 rotation = new Vector3(0f, rotationInput, 0f);
+
+            
+>>>>>>> Stashed changes
 
             if (direction.magnitude >= 0.2f)
             {
@@ -70,6 +93,7 @@ public class ExcavatorMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 excavatorController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+<<<<<<< Updated upstream
                 anim.SetFloat(hash.leftMoveFloat, animationSpeed, speedDampTime, Time.deltaTime);
                 anim.SetFloat(hash.rightMoveFloat, animationSpeed, speedDampTime, Time.deltaTime);
             }
@@ -77,6 +101,14 @@ public class ExcavatorMovement : MonoBehaviour
             {
                 anim.SetFloat(hash.leftMoveFloat, 0f);
                 anim.SetFloat(hash.rightMoveFloat, 0f);
+=======
+                anim.SetBool(hash.drivingBool, true);
+
+            }
+            else
+            {
+                anim.SetBool(hash.drivingBool, false);
+>>>>>>> Stashed changes
             } 
         }
     }
